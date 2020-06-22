@@ -1,12 +1,39 @@
 #include <Windows.h>
+#include "WindowsMessageMap.h"
+#include <sstream>
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	static WindowsMessageMap messageMap;
+	OutputDebugString(messageMap(msg, lParam, wParam).c_str());
 	switch (msg)
 	{
 	case WM_CLOSE:
 		PostQuitMessage(69);
 		break;
+	case WM_CHAR:
+	{
+		static std::string title;
+		if (wParam != 0x00000008)
+		{
+			title.push_back((char)wParam);
+		}
+		else
+		{
+			if (title.size() > 0)
+			{
+				title.pop_back();
+			}
+		}
+		SetWindowText(hWnd, title.c_str());
+	}
+	case WM_LBUTTONDOWN:
+	{
+		POINTS pt = MAKEPOINTS(lParam);
+		std::ostringstream oss;
+		oss << "(" << pt.x << "," << pt.y << ")";
+		SetWindowText(hWnd, oss.str().c_str());
+	}
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
