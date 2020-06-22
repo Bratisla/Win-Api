@@ -1,0 +1,3 @@
+﻿  WinMain.cpp
+D:\GitHub\Win-Api\WinMain.cpp(59,13): warning C4244: 'return': conversion from 'WPARAM' to 'int', possible loss of data
+  WinApi.vcxproj -> D:\GitHub\Win-Api\x64\Debug\WinApi.exe

@@ -1,0 +1,2 @@
+D:\GitHub\Win-Api\x64\Debug\WinApi.exe
+D:\GitHub\Win-Api\x64\Debug\WinApi.pdb
