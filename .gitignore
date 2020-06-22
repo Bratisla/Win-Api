@@ -10,3 +10,7 @@
 *.ipdb
 *.iobj
 *.ipch
+*.opendb
+*.db-shm
+*.pdb
+*.db-wal

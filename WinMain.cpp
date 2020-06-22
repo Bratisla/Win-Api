@@ -1,11 +1,27 @@
 #include <Windows.h>
 #include "WindowsMessageMap.h"
 #include <sstream>
+#include <iostream>
+
+// Get the horizontal and vertical screen sizes in pixel
+void GetDesktopResolution(int& horizontal, int& vertical)
+{
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+	// The top left corner will have coordinates (0,0)
+	// and the bottom right corner will have coordinates
+	// (horizontal, vertical)
+	horizontal = desktop.right;
+	vertical = desktop.bottom;
+}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
+{/*
 	static WindowsMessageMap messageMap;
-	OutputDebugString(messageMap(msg, lParam, wParam).c_str());
+	OutputDebugString(messageMap(msg, lParam, wParam).c_str());*/
 	switch (msg)
 	{
 	case WM_CLOSE:
@@ -44,7 +60,18 @@ int CALLBACK WinMain(
 	LPSTR lpCmdLine,
 	int nCmdShow)
 {
+ 
+	std::string resolution = {};
+	int horizontal = 0;
+	int vertical = 0;
+	GetDesktopResolution(horizontal, vertical);
+	resolution.push_back(horizontal);
+	
+
+
 	const auto pClassName = "dx11 window";
+
+
 	// register window class
 	WNDCLASSEX windowClass = { 0 };
 	windowClass.cbSize = sizeof(windowClass);
@@ -76,6 +103,7 @@ int CALLBACK WinMain(
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
+		OutputDebugString(resolution.c_str());
 	}
 	if (getResult == -1)
 	{
